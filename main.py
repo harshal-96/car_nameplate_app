@@ -42,7 +42,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 class CarSegmentationModel(nn.Module):
     def __init__(self, num_classes=3):
         super(CarSegmentationModel, self).__init__()
-        self.model = models.resnet18(pretrained=True)
+        self.model = models.resnet18(pretrained=False)
         self.model.fc = nn.Linear(self.model.fc.in_features, num_classes)
 
     def forward(self, x):
@@ -65,7 +65,7 @@ async def startup_event():
     
     # In a real app, you'd load your trained model here
     # For demo purposes, we'll assume the model is available
-    # model.load_state_dict(torch.load("car_segmentation_model.pth", map_location=device))
+    model.load_state_dict(torch.load("car_segmentation_model.pth", map_location=device))
     
     # For demo purposes, let's just use the pretrained model
     model.eval()
