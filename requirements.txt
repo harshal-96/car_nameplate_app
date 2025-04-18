@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+python-multipart
+torch
+torchvision
+opencv-python-headless
+easyocr
+bs4
+requests
+numpy
+pillow
+aiofiles
+gdown
