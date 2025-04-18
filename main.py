@@ -71,7 +71,7 @@ async def startup_event():
     model.eval()
     
     # Initialize OCR reader
-    reader = easyocr.Reader(['en'])
+    reader = easyocr.Reader(['en'], model_storage_directory='./easyocr_models')
 
 # Helper functions
 def predict_car_view(image, model, device):
