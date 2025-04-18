@@ -18,7 +18,6 @@ import requests
 from bs4 import BeautifulSoup
 import os
 import uvicorn
-import gdown
 
 # Define the FastAPI app
 app = FastAPI(
@@ -54,31 +53,11 @@ model = None
 device = None
 reader = None
 
-
-# MODEL_PATH = "car_segmentation_model.pth"
-# MODEL_URL_ID = "1UDTHdFmAnlPUJ7suo0u2gJQkDVk841iJ"  # replace with your actual ID
-# MODEL_GDRIVE_URL = f"https://drive.google.com/uc?id={MODEL_URL_ID}"
-
-# https://drive.google.com/file/d/1UDTHdFmAnlPUJ7suo0u2gJQkDVk841iJ/view?usp=sharing
 # Initialize models on startup
 @app.on_event("startup")
 async def startup_event():
     global model, device, reader
     # Initialize device
-
-    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    # # Download model if not present
-    # if not os.path.exists(MODEL_PATH):
-    #     print("Downloading model...")
-    #     gdown.download(MODEL_GDRIVE_URL, MODEL_PATH, quiet=False)
-    
-    # # Load model
-    # model = CarSegmentationModel(num_classes=3).to(device)
-    # model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
-    # model.eval()
-
-
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     # Initialize model
@@ -436,6 +415,4 @@ async def lookup_vehicle(
 
 # Run the application
 if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 10000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
