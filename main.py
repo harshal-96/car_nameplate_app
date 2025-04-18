@@ -55,9 +55,9 @@ device = None
 reader = None
 
 
-MODEL_PATH = "car_segmentation_model.pth"
-MODEL_URL_ID = "1UDTHdFmAnlPUJ7suo0u2gJQkDVk841iJ"  # replace with your actual ID
-MODEL_GDRIVE_URL = f"https://drive.google.com/uc?id={MODEL_URL_ID}"
+# MODEL_PATH = "car_segmentation_model.pth"
+# MODEL_URL_ID = "1UDTHdFmAnlPUJ7suo0u2gJQkDVk841iJ"  # replace with your actual ID
+# MODEL_GDRIVE_URL = f"https://drive.google.com/uc?id={MODEL_URL_ID}"
 
 # https://drive.google.com/file/d/1UDTHdFmAnlPUJ7suo0u2gJQkDVk841iJ/view?usp=sharing
 # Initialize models on startup
@@ -66,30 +66,30 @@ async def startup_event():
     global model, device, reader
     # Initialize device
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    # Download model if not present
-    if not os.path.exists(MODEL_PATH):
-        print("Downloading model...")
-        gdown.download(MODEL_GDRIVE_URL, MODEL_PATH, quiet=False)
-    
-    # Load model
-    model = CarSegmentationModel(num_classes=3).to(device)
-    model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
-    model.eval()
-
-
     # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # # Download model if not present
+    # if not os.path.exists(MODEL_PATH):
+    #     print("Downloading model...")
+    #     gdown.download(MODEL_GDRIVE_URL, MODEL_PATH, quiet=False)
     
-    # # Initialize model
+    # # Load model
     # model = CarSegmentationModel(num_classes=3).to(device)
-    
-    # # In a real app, you'd load your trained model here
-    # # For demo purposes, we'll assume the model is available
-    # # model.load_state_dict(torch.load("car_segmentation_model.pth", map_location=device))
-    
-    # # For demo purposes, let's just use the pretrained model
+    # model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
     # model.eval()
+
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    
+    # Initialize model
+    model = CarSegmentationModel(num_classes=3).to(device)
+    
+    # In a real app, you'd load your trained model here
+    # For demo purposes, we'll assume the model is available
+    # model.load_state_dict(torch.load("car_segmentation_model.pth", map_location=device))
+    
+    # For demo purposes, let's just use the pretrained model
+    model.eval()
     
     # Initialize OCR reader
     reader = easyocr.Reader(['en'])
